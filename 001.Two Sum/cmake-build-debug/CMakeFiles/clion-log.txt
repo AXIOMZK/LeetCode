@@ -1,4 +1,0 @@
-"/Users/kingzhang.cn/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/171.4694.4/CLion.app/Contents/bin/cmake/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/Users/kingzhang.cn/ClionProjects/LeetCode/001.Two Sum"
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/kingzhang.cn/ClionProjects/LeetCode/001.Two Sum/cmake-build-debug

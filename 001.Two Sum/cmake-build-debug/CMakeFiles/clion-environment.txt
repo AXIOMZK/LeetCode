@@ -1,2 +1,0 @@
-Options: 
-CMake: 3.7.2@/Users/kingzhang.cn/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/171.4694.4/CLion.app/Contents/bin/cmake/bin/cmake
