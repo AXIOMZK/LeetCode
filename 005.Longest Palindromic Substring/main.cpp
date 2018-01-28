@@ -34,25 +34,18 @@ public:
     //        {       0         i<j && xi!=xj
     //        {    dp[j,i]      i>j
     // 注意要用递归函数dpf(i,j),而不直接使用数组dp[i][j],保证引用的数据一定是已经计算过的
-    //time: 523ms beats 2.32%
+    //time: 523ms beats 2.32%  ==> 427ms 2.23%
     string longestPalindrome(string s)
     {
         auto m = static_cast<int>(s.length());
         vector<vector<int >> dp(m, vector<int>(m));
         int max = 0, mi = 0, mj = 0;
-        for (int i = 0; i < m; ++i)
-        {
-            for (int j = 0; j < m; ++j)
-            {
-                dp[i][j] = -1;
-            }
-        }
 
         for (int i = 0; i < m; ++i)
         {
             for (int j = 0; j < m; ++j)
             {
-                if (dpf(i, j, dp, s) > max && dpf(i, j, dp, s) <= 1000)
+                if (dpf(i, j, dp, s) > max && dpf(i, j, dp, s) <= 1000+1)
                 {
                     max = dp[i][j];
                     mi = std::min(i, j);
@@ -66,24 +59,25 @@ public:
 
     int dpf(int i, int j, vector<vector<int >> &dp, const string &s)
     {
-        if (dp[i][j] != -1)
+        //dp[][] all +1
+        if (dp[i][j] != -1+1)
             return dp[i][j];
         if (i == j)
         {
-            dp[i][j] = 1;
+            dp[i][j] = 1+1;
         } else if (i > j)
         {
             dp[i][j] = dpf(j, i, dp, s);
 
         } else if (s[i] == s[j] && i + 1 == j)
         {
-            dp[i][j] = 2;
-        } else if (s[i] == s[j] && dpf(i + 1, j - 1, dp, s) > 0)
+            dp[i][j] = 2+1;
+        } else if (s[i] == s[j] && dpf(i + 1, j - 1, dp, s) > 0+1)
         {
             dp[i][j] = dp[i + 1][j - 1] + 2;
         } else
         {
-            dp[i][j] = 0;
+            dp[i][j] = 0+1;
         }
         return dp[i][j];
     }
