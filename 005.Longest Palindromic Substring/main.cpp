@@ -14,7 +14,7 @@ static const auto _____ = []()
 class Solution
 {
 public:
-    //直接动态规划
+    //直接动态规划 O(n^2)
     //X={x1,x2,...,xi,...,xj,...xm} i<=j
     //        {       1         i==j
     //dp[i,j]={  dp[i+1,j-1]+2  i<j && xi==xj && dp[i+1,j-1] > 0
@@ -24,7 +24,7 @@ public:
     //        {    dp[j,i]      i>j
     // 注意要用递归函数dpf(i,j),而不直接使用数组dp[i][j],保证引用的数据一定是已经计算过的
     //time: 523ms beats 2.32%  ==> 427ms 2.23%
-    string longestPalindrome(string s)
+    string longestPalindrome0(string s)
     {
         auto m = static_cast<int>(s.length());
         vector<vector<int >> dp(m, vector<int>(m));
@@ -71,7 +71,8 @@ public:
         return dp[i][j];
     }
 
-    //采用正序反序求LCS最长公共子串
+
+    //采用正序反序求LCS最长公共子串 O(n^2)
     //X={x1,x2,...,xi,...xm}
     //Y={y1,y2,...,yj,...yn}
     //定义dp[i,j] 结尾为xi与yj的公共子串的长度
@@ -117,17 +118,44 @@ public:
     }
 
 
+    //Expand around center O(n^2)
+    // time: 4ms beats 93.89%
+    string longestPalindrome(string s)
+    {
+        if (s.size() < 2)
+            return s;
+        int len = s.size(), max_left = 0, max_len = 1, left, right;
+        //len - start > max_len / 2 此句会大幅加快搜索速度，分支限界
+        for (int start = 0; start < len && len - start > max_len / 2;)
+        {
+            left = right = start;
+            //中间部分相同
+            while (right < len - 1 && s[right] == s[right + 1]) ++right;
+            start = right + 1;
+            while (right < len - 1 && s[right + 1] == s[left - 1])
+            {
+                ++right;
+                --left;
+            }
+            if (max_len < right - left + 1)
+            {
+                max_left = left;
+                max_len = right - left + 1;
+            }
+        }
+        return s.substr(max_left, max_len);
+    }
 
-    //Around center
 
 
+    //Manacher's Algorithm O(n)
 
-    //Manacher's Algorithm
+
 };
 
 int main()
 {
     Solution solution;
-    std::cout << solution.longestPalindrome1("aaabcdasdfghjkldcbaaa") << std::endl;
+    std::cout << solution.longestPalindrome("aaabcdasdfghjkldcbaaa") << std::endl;
     return 0;
 }
